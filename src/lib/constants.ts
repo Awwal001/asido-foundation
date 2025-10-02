@@ -50,3 +50,36 @@ export const FOOTER_LINKS = {
     phones: ['+234 818 077 7458', '+234 902 808 0416'],
   },
 } as const
+
+export const SOCIAL_LINKS = [
+  {
+    name: 'twitter',
+    href: SITE_CONFIG.links.twitter,
+    icon: '/icons/twitter.svg',
+    alt: 'Twitter',
+  },
+  {
+    name: 'facebook',
+    href: SITE_CONFIG.links.facebook,
+    icon: '/icons/facebook.svg',
+    alt: 'Facebook',
+  },
+  {
+    name: 'linkedin',
+    href: SITE_CONFIG.links.linkedin,
+    icon: '/icons/linkedin.svg',
+    alt: 'LinkedIn',
+  },
+  {
+    name: 'instagram',
+    href: SITE_CONFIG.links.instagram,
+    icon: '/icons/instagram.svg',
+    alt: 'Instagram',
+  },
+] as const
+
+export const CONTACT_ICONS = {
+  location: '/icons/location.svg',
+  envelope: '/icons/envelope.svg',
+  call: '/icons/call.svg',
+} as const

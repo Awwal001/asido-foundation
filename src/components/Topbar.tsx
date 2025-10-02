@@ -1,4 +1,3 @@
-// components/Topbar.tsx
 'use client'
 
 import { useState } from 'react'
@@ -33,7 +32,6 @@ export default function Topbar() {
         </Link>
 
         <div className="flex items-center space-x-6">
-          {/* Desktop Search Icon */}
           <button className="hidden md:flex items-center justify-center w-8 h-8 hover:opacity-80 transition-opacity">
             <Image
               src="/SearchIcon.svg"
@@ -44,7 +42,6 @@ export default function Topbar() {
             />
           </button>
 
-          {/* Mobile Search Icon */}
           <button className="md:hidden flex items-center justify-center w-6 h-6 text-primary hover:text-secondary transition-colors">
             <Search className="w-4 h-4" strokeWidth={1.2} />
           </button>

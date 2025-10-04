@@ -9,8 +9,13 @@ export default function BlogSection() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [isMounted, setIsMounted] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => setIsMounted(true), [])
+  useEffect(() => {
+    setIsMounted(true)
+    const timer = setTimeout(() => setIsLoading(false), 1000)
+    return () => clearTimeout(timer)
+  }, [])
 
   const scrollToIndex = (index: number) => {
     if (scrollContainerRef.current && isMounted) {
@@ -31,7 +36,7 @@ export default function BlogSection() {
     scrollToIndex(nextIndex)
   }
 
-  if (!isMounted) {
+  if (!isMounted || isLoading) {
     return (
       <section id="blog" className="py-16">
         <div className="container mx-auto px-4">
@@ -93,7 +98,7 @@ export default function BlogSection() {
                 {index === currentIndex && (
                   <button
                     onClick={nextSlide}
-                    className="absolute top-45 right-4 w-10 h-10 bg-[#FFFFFF] rounded-full flex items-center justify-center hover:opacity-90 transition-all z-10 shadow-lg"
+                    className="absolute top-24 right-4 w-10 h-10 bg-[#FFFFFF] rounded-full flex items-center justify-center hover:opacity-90 transition-all z-10 shadow-lg"
                     aria-label="Next blog post"
                   >
                     <ChevronRight className="w-5 h-5 text-[#354E70]" />

@@ -97,7 +97,7 @@ export default function Timeline() {
   const titleColors = ['#00B191', '#F9AE0B', '#FD372C', '#4ABDCD']
 
   return (
-    <section id="milestones" className="py-16 md:pt-20 md:pb-40 bg-white">
+    <section id="milestones" className="py-16 md:pt-[200px] md:pb-[120px] bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <p className="text-2xl md:text-4xl font-bold text-text-primary mx-auto max-w-4xl">
@@ -109,11 +109,11 @@ export default function Timeline() {
         <div className="relative">
           <div
             ref={baseLineRef}
-            className="absolute left-1/2 transform -translate-x-1/2 w-[2px] bg-[#E7E9F5] h-full top-0 z-0"
+            className="absolute left-2 md:left-1/2 transform md:-translate-x-1/2 w-[2px] bg-[#E7E9F5] h-full top-0 z-0"
           />
 
           <div
-            className="absolute left-1/2 transform -translate-x-1/2 w-[2px] top-0 z-10 transition-all duration-500 ease-in-out"
+            className="absolute left-2 md:left-1/2 transform md:-translate-x-1/2 w-[2px] top-0 z-10 transition-all duration-500 ease-in-out"
             style={{
               height: `${fillHeight}px`,
               backgroundColor: fillHeight > 0 ? 'var(--color-primary, #30459D)' : 'transparent',
@@ -130,16 +130,43 @@ export default function Timeline() {
               const firstItemSide = firstGlobalIndex % 2 === 0 ? 'right' : 'left'
 
               return (
-                <div key={milestoneYear.year} className="relative mb-30 last:mb-0">
+                <div key={milestoneYear.year} className={`relative mb-30 last:mb-0 ${isActive ? 'py-8' : ''}`}>
                   {isActive && (
-                    <div className="absolute left-1/2 transform -translate-x-1/2 w-16 h-36 -top-24 bg-white z-15" />
+                    <div className="absolute left-2 md:left-1/2 transform md:-translate-x-1/2 w-12 md:w-16 h-40 -top-20 bg-white z-15" />
                   )}
+
+                  <div className="md:hidden flex items-center mb-8">
+                    <div
+                      ref={(el) => {
+                        nodeRefs.current[yearIndex] = el
+                      }}
+                      className="relative z-20 flex-shrink-0"
+                    >
+                      <div
+                        className={`w-5 h-5 rounded-full transition-all duration-300 ${
+                          nodeFilled ? 'bg-primary' : 'bg-[#E7E9F5]'
+                        }`}
+                      />
+                    </div>
+
+                    <div
+                      ref={(el) => {
+                        yearRefs.current[yearIndex] = el
+                      }}
+                      data-year={milestoneYear.year}
+                      className="ml-4 z-30"
+                    >
+                      <span className="text-2xl font-bold text-primary">
+                        {milestoneYear.year}
+                      </span>
+                    </div>
+                  </div>
 
                   <div
                     ref={(el) => {
                       nodeRefs.current[yearIndex] = el
                     }}
-                    className="absolute left-1/2 transform -translate-x-1/2 -top-8 z-20 transition-all duration-300"
+                    className="hidden md:block absolute left-1/2 transform -translate-x-1/2 -top-8 z-20 transition-all duration-300"
                   >
                     <div
                       className={`w-5 h-5 rounded-full transition-all duration-300 ${
@@ -155,25 +182,11 @@ export default function Timeline() {
                     data-year={milestoneYear.year}
                     className={`hidden md:block absolute -top-9 z-30 ${
                       firstItemSide === 'right'
-                       ? 'left-1/2 pl-13 text-left'
+                        ? 'left-1/2 pl-13 text-left'
                         : 'left-4 text-left'
                     }`}
                   >
-                    <span
-                      className={`text-2xl font-bold transition-colors duration-300 ${
-                        nodeFilled ? 'text-primary' : 'text-text-secondary'
-                      }`}
-                    >
-                      {milestoneYear.year}
-                    </span>
-                  </div>
-
-                  <div className="md:hidden text-center mb-8">
-                    <span
-                      className={`text-2xl font-bold transition-colors duration-300 ${
-                        nodeFilled ? 'text-primary' : 'text-text-secondary'
-                      }`}
-                    >
+                    <span className="text-2xl font-bold text-primary">
                       {milestoneYear.year}
                     </span>
                   </div>
@@ -190,8 +203,8 @@ export default function Timeline() {
 
                       const contentColumnClass =
                         side === 'left'
-                          ? 'md:col-start-1 md:col-end-2 pr-6 text-left'
-                          : 'md:col-start-2 md:col-end-3 pl-6 text-left'
+                          ? 'md:col-start-1 md:col-end-2 md:pr-6 text-left'
+                          : 'md:col-start-2 md:col-end-3 md:pl-6 text-left'
 
                       const spacerColumnClass =
                         side === 'left'
@@ -209,11 +222,12 @@ export default function Timeline() {
                         >
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
                             <div className={`${spacerColumnClass} hidden md:block`} />
-                            <div className={`${contentColumnClass}`}>
+                            
+                            <div className={`${contentColumnClass} ml-16 md:ml-0`}>
                               <article className="rounded-md bg-white overflow-hidden">
                                 <div className="px-4 py-4">
                                   <h4
-                                    className="mb-2 font-plus-jakarta font-semibold text-2xl leading-[140%] transform transition-all duration-500 ease-out"
+                                    className="mb-2 font-plus-jakarta font-semibold text-base md:text-2xl leading-[140%] transform transition-all duration-500 ease-out"
                                     style={{
                                       color: titleColors[globalIndex % titleColors.length],
                                       opacity: isVisible ? 1 : 0,
@@ -227,7 +241,7 @@ export default function Timeline() {
                                   </h4>
 
                                   <p
-                                    className="mb-4 text-text-secondary font-plus-jakarta font-bold text-xl leading-[130%] transform transition-all duration-500 ease-out"
+                                    className="mb-4 text-text-secondary font-plus-jakarta font-bold text-lg md:text-xl leading-[130%] transform transition-all duration-500 ease-out"
                                     style={{
                                       opacity: isVisible ? 1 : 0,
                                       transform: isVisible

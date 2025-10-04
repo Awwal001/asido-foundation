@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { milestonesData } from '@/utils/milestone-data'
+import LinkButton from "@/components/LinkButton";
+
 
 export default function Timeline() {
   const [activeYear, setActiveYear] = useState<string | null>(null)
@@ -268,7 +270,7 @@ export default function Timeline() {
                                         alt={item.title}
                                         width={800}
                                         height={600}
-                                        className="w-full h-auto object-cover rounded-lg"
+                                        className="w-full h-auto object-cover rounded-lg transition-transform duration-500 hover:scale-105"
                                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
                                         priority={itemIndex === 0}
                                       />
@@ -276,22 +278,13 @@ export default function Timeline() {
                                   )}
 
                                   {item.link && (
-                                    <a
-                                      href={item.link}
-                                      className="inline-flex items-center font-semibold text-primary hover:text-secondary transition-colors group uppercase tracking-wide text-sm transform transition-all duration-500 ease-out"
-                                      style={{
-                                        opacity: isVisible ? 1 : 0,
-                                        transform: isVisible
-                                          ? 'translateY(0)'
-                                          : 'translateY(20px)',
-                                        transitionDelay: isVisible ? '400ms' : '0ms',
-                                      }}
-                                    >
-                                      Learn More
-                                      <span className="ml-1 group-hover:ml-2 transition-all duration-300">
-                                        →
-                                      </span>
-                                    </a>
+                                <div className="mt-3">
+                                  <LinkButton
+                                    href={item.link}
+                                    label="Learn More"
+                                  />
+                                </div>
+
                                   )}
                                 </div>
                               </article>

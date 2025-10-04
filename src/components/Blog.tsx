@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { ChevronRight } from 'lucide-react'
-import { blogPosts, BlogPost } from '@/utils/blog-data'
+import { blogPosts } from '@/utils/blog-data'
 import BlogCard from './BlogCard'
 
 export default function BlogSection() {
@@ -10,15 +10,13 @@ export default function BlogSection() {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [isMounted, setIsMounted] = useState(false)
 
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
+  useEffect(() => setIsMounted(true), [])
 
   const scrollToIndex = (index: number) => {
     if (scrollContainerRef.current && isMounted) {
       const container = scrollContainerRef.current
       const card = container.children[0] as HTMLElement
-      const cardWidth = card.offsetWidth + 16
+      const cardWidth = card.offsetWidth + 12
       container.scrollTo({
         left: index * cardWidth,
         behavior: 'smooth'
@@ -29,7 +27,7 @@ export default function BlogSection() {
 
   const nextSlide = () => {
     if (!isMounted) return
-    const nextIndex = currentIndex + 1 >= Math.ceil(blogPosts.length / 2) ? 0 : currentIndex + 1
+    const nextIndex = currentIndex + 1 >= blogPosts.length ? 0 : currentIndex + 1
     scrollToIndex(nextIndex)
   }
 
@@ -37,12 +35,12 @@ export default function BlogSection() {
     return (
       <section id="blog" className="py-16">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-4">
+          <div className="mb-12">
+            <h2 className="text-[24px] md:text-[40px] font-[600] text-[#00B191] mb-3">
               Stay Informed
             </h2>
-            <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-              Latest insights and updates from our mental health advocacy work
+            <p className="text-[18px] md:text-[31px] font-[700] text-[#202124] max-w-2xl">
+              Through advocacy, education, and support, we're building a stigma-free future for mental health in Nigeria.
             </p>
           </div>
           <div className="hidden md:grid md:grid-cols-3 gap-8">
@@ -58,12 +56,12 @@ export default function BlogSection() {
   return (
     <section id="blog" className="py-16">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-4">
+        <div className="mb-12">
+          <h2 className="text-[14px] md:text-[24px] font-[600] text-secondary mb-3">
             Stay Informed
           </h2>
-          <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-            Latest insights and updates from our mental health advocacy work
+          <p className="text-[18px] md:text-[31px] font-[700] text-[#202124] max-w-3xl leading-snug">
+            Through advocacy, education, and support, we're building a stigma-free future for mental health in Nigeria.
           </p>
         </div>
 
@@ -74,34 +72,35 @@ export default function BlogSection() {
         </div>
 
         <div className="md:hidden relative">
-          <div 
+          <div
             ref={scrollContainerRef}
-            className="flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory pl-4"
-            style={{ 
-              scrollbarWidth: 'none', 
+            className="flex gap-3 overflow-x-auto scrollbar-hide snap-x snap-mandatory pl-4"
+            style={{
+              scrollbarWidth: 'none',
               msOverflowStyle: 'none',
-              WebkitOverflowScrolling: 'touch'
+              WebkitOverflowScrolling: 'touch',
             }}
           >
             {blogPosts.map((post, index) => (
-              <div 
-                key={post.id} 
-                className="flex-shrink-0 w-[calc(50%-8px)] snap-start"
-                style={{ minWidth: 'calc(50% - 8px)' }}
+              <div
+                key={post.id}
+                className="flex-shrink-0 snap-start relative"
+                style={{
+                  width: '48vw',
+                }}
               >
                 <BlogCard post={post} />
+                {index === currentIndex && (
+                  <button
+                    onClick={nextSlide}
+                    className="absolute top-45 right-4 w-10 h-10 bg-[#FFFFFF] rounded-full flex items-center justify-center hover:opacity-90 transition-all z-10 shadow-lg"
+                    aria-label="Next blog post"
+                  >
+                    <ChevronRight className="w-5 h-5 text-[#354E70]" />
+                  </button>
+                )}
               </div>
             ))}
-            
-            <div className="flex-shrink-0 w-[calc(50%-8px)] flex items-center justify-center">
-              <button
-                onClick={nextSlide}
-                className="w-12 h-12 bg-primary rounded-full flex items-center justify-center hover:bg-primary-dark transition-colors"
-                aria-label="Next blog posts"
-              >
-                <ChevronRight className="w-6 h-6 text-white" />
-              </button>
-            </div>
           </div>
         </div>
       </div>
